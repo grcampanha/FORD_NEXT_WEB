@@ -7,13 +7,14 @@
 <body id="body">
     <section>
         <h2 class="title">CARS</h2>
-        <div class="add">
-            <a asp-action="AddCar">
-            <img src="~/css/img/cars/" alt="" srcset="" />
+
+        <a asp-action="AddCar">
+            <div class="add">
+                <img src="~/css/img/cars/" alt="" srcset="" />
                 <h2>ADD CAR</h2>
-            </a>
-            @*<h2>ADD CAR</h2>*@
-        </div>
+            </div>
+        </a>
+
 
         @foreach (var item in Model)
         {
@@ -70,4 +71,5 @@
             </div>
             </a>
         }
+    </section>
 </body>

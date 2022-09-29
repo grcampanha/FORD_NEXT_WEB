@@ -291,7 +291,7 @@ namespace Revosoft.Controllers
             var veiculos = await _context.Veiculos.FindAsync(id);
             _context.Veiculos.Remove(veiculos);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Cars));
         }
     }
 }
