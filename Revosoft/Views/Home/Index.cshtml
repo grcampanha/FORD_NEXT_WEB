@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<body id="body">
+    <section>
+        <h2 class="hub_title">Your HUB</h2>
+        <p class="user_hello">Hello, @User.Identity.Name! How can we help you today?</p>
+        <a asp-controller="Home" asp-action="Cars">
+            <div class="vehicles">
+                <img src="~/img/icons/carros.png" alt="" srcset="" />
+                <h2>cars</h2>
+                <div></div>
+                <p>here you can add and remove all your cars in a simple and fast way</p>
+            </div>
+        </a>
+        <a asp-controller="Home" asp-action="Skills" asp-route-id="1">
+            <div class="skills">
+                <img src="~/img/icons/scores.png" alt="" srcset="" />
+                <h2>skills</h2>
+                <div></div>
+                <p>here you can see all the scores of your cars and manage them</p>
+            </div>
+        </a>
+        <a asp-controller="Home" asp-action="Store">
+            <div class="store">
+                <img src="~/img/icons/loja.png" alt="" srcset="" />
+                <h2>store</h2>
+                <div></div>
+                <p>here you can find new parts to buy them in a quick and practical way</p>
+            </div>
+        </a>
+    </section>
+</body>
