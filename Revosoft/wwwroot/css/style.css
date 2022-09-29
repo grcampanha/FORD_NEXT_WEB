@@ -464,6 +464,11 @@
     box-shadow: 0 0 0 1px rgba(0,0,0,.01);
 }
 
+.box_login li {
+    margin-left:20%;
+    list-style: none;
+}
+
 #btn-login {
     background: white;
     width: 60%;
@@ -553,7 +558,7 @@ input:active {
     .facebook p {
         float: right;
         margin-right: 20%;
-        margin-top: -1%;
+        margin-top: -2%;
         color: rgb(255, 255, 255);
     }
 
@@ -591,12 +596,13 @@ input:active {
 .box-skills {
     width: 90%;
     display: block;
-    margin-top: 50px;
+    border: 1px solid #9e16c3;
+    margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
     background-color: rgba(0, 0, 0, 0.65);
     color: whitesmoke;
-    border-radius: 30px;
+    border-radius: 7px;
 }
 
 .top-box {
@@ -634,36 +640,39 @@ input:active {
 }
 
 .bottom-box {
-    width: 65%;
-    padding-bottom: 60px;
+    border-top: 1px solid white;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 3%;
+    padding-bottom: 40px;
 }
 
     .bottom-box h1 {
         font-size: 30px;
-        margin-left: 70px;
-        margin-top: 8%;
+        margin-left: 20px;
+        margin-top: 2%;
     }
 
 .engine {
-    margin-left: 70px;
+    margin-left: 20px;
     width: 30%;
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .wheel {
     width: 30%;
     float: right;
-    margin-top: -5.1%;
+    margin-top: -3.0%;
     margin-right: 32%;
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .cambio {
     width: 28%;
     float: right;
-    margin-top: -5.1%;
+    margin-top: -3%;
     margin-left: 20%;
-    font-size: 24px;
+    font-size: 18px;
 }
 
 .available {
@@ -675,7 +684,7 @@ input:active {
 }
 
 .score-engine {
-    margin-left: 70px;
+    margin-left: 20px;
     width: 30%;
     font-size: 18px;
 }
@@ -683,7 +692,7 @@ input:active {
 .score-wheel {
     width: 30%;
     float: right;
-    margin-top: -5.1%;
+    margin-top: -3.7%;
     margin-right: 32%;
     font-size: 18px;
 }
@@ -691,7 +700,7 @@ input:active {
 .score-cambio {
     width: 28%;
     float: right;
-    margin-top: -5.1%;
+    margin-top: -3.7%;
     margin-left: 20%;
     text-align: initial;
     font-size: 18px;

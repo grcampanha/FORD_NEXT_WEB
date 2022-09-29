@@ -68,7 +68,7 @@ namespace Revosoft.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-            ModelState.AddModelError("", "Falha ao realizar o login!!");
+            ModelState.AddModelError("", "Usuário ou Senha Incorretos!");
             return View();
         }
 
