@@ -13,6 +13,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using Revosoft.Repositories.Interfaces;
 
 namespace Revosoft.Controllers
 {
@@ -26,8 +27,11 @@ namespace Revosoft.Controllers
         }
 
         [Authorize]
-        public IActionResult Index()
+        public IActionResult Index(string? warning)
         {
+            if(warning != null)
+             ModelState.AddModelError("", warning);
+
             return View();
         }
 
@@ -160,6 +164,8 @@ namespace Revosoft.Controllers
         [Authorize]
         public async Task<IActionResult> Cars(string modelo, int pageindex = 1, string sortExpression = "Modelo")
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             var resultado = _context.Veiculos.Include(s => s.Usuarios).AsQueryable();
 
             if (!string.IsNullOrEmpty(modelo))
@@ -167,10 +173,8 @@ namespace Revosoft.Controllers
                 resultado = resultado.Where(p => p.Modelo.Contains(modelo));
             }
 
-            //if (!string.IsNullOrEmpty(prestadores))
-            //{
-            //    resultado = resultado.Where(p => p.Prestadores.Apelido.Contains(prestadores));
-            //}
+            resultado = resultado.Where(u => u.UsuariosId.ToString() == userId);
+
             var model = await PagingList.CreateAsync(resultado, 50, pageindex, sortExpression, "Modelo");
             model.RouteValue = new RouteValueDictionary { { "modelo", modelo } };
 
@@ -178,9 +182,18 @@ namespace Revosoft.Controllers
         }
 
         [Authorize]
-        public IActionResult Store()
+        public async Task<IActionResult> Store(string produto, int pageindex = 1, string sortExpression = "Produto")
         {
-            return View();
+            var resultado = _context.Store.AsQueryable();
+
+            if (!string.IsNullOrEmpty(produto))
+            {
+                resultado = resultado.Where(p => p.Produto.Contains(produto));
+            }
+            var model = await PagingList.CreateAsync(resultado, 50, pageindex, sortExpression, "Produto");
+            model.RouteValue = new RouteValueDictionary { { "produto", produto } };
+
+            return View(model);
         }
 
         [Authorize]
@@ -192,6 +205,33 @@ namespace Revosoft.Controllers
         // GET: Skills/5
         [Authorize]
         public async Task<IActionResult> Skills(int? id)
+        {
+            string warning = "Adicione um veículo para acessar as Skills!";
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var verificacao = _context.Veiculos.FirstOrDefault(vn => vn.UsuariosId == id);
+            if (verificacao == null)
+            {
+                return RedirectToAction("Index", "Home", new { warning });
+            }
+            var veiculo = _context.Veiculos.Where(v => v.UsuariosId == id).OrderBy(p => p.VeiculosId).OrderByDescending(p => p.VeiculosId).Take(1).Single();
+            var pecas = _context.Pecas.Where(p => p.VeiculosId == veiculo.VeiculosId).OrderBy(p => p.PecasId).OrderByDescending(p => p.PecasId).Take(1).Single();
+
+            var veiculos = await _context.Veiculos
+                .FirstOrDefaultAsync(m => m.VeiculosId == pecas.VeiculosId);
+            if (veiculos == null)
+            {
+                return NotFound();
+            }
+            
+            return View(veiculos);
+        }
+
+        // GET: Skills/5
+        [Authorize]
+        public async Task<IActionResult> SkillsCar(int? id)
         {
             if (id == null)
             {
@@ -209,7 +249,7 @@ namespace Revosoft.Controllers
             {
                 return NotFound();
             }
-            
+
             return View(veiculos);
         }
 
@@ -243,7 +283,9 @@ namespace Revosoft.Controllers
         [Authorize]
         public IActionResult AddCar()
         {
-            ViewData["UsuariosId"] = new SelectList(_context.Usuarios, "UsuariosId", "Nome");
+            ViewData["UsuariosId"] = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            //ViewData["UsuariosId"] = new SelectList(_context.Usuarios, "UsuariosId", "Nome");
             return View();
         }
 
@@ -253,13 +295,29 @@ namespace Revosoft.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddCar([Bind("VeiculosId,Placa,Modelo,Ano,UsuariosId")] Veiculos veiculos)
         {
+            veiculos.Placa = veiculos.Placa.ToUpper();
             if (ModelState.IsValid)
             {
                 _context.Add(veiculos);
                 await _context.SaveChangesAsync();
+                
+
+                Pecas pecas = new Pecas()
+                {
+                    VeiculosId = veiculos.VeiculosId,
+                    CambioScore = 100,
+                    MotorScore = 100,
+                    PneuScore = 100,
+                    BateriaScore = 100
+                };
+
+                _context.Add(pecas);
+                await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Cars));
             }
-            ViewData["UsuariosId"] = new SelectList(_context.Usuarios, "UsuariosId", "Nome", veiculos.UsuariosId);
+            ViewData["UsuariosId"] = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //ViewData["UsuariosId"] = new SelectList(_context.Usuarios, "UsuariosId", "Nome", veiculos.UsuariosId);
             return View(veiculos);
         }
 

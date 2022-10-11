@@ -19,7 +19,7 @@
         @foreach (var item in Model)
         {
             string carro = item.Modelo;
-            <a asp-controller="Home" asp-action="Skills" asp-route-id="@item.VeiculosId">
+            <a asp-controller="Home" asp-action="SkillsCar" asp-route-id="@item.VeiculosId">
                 <div class="car">
                     @if (carro == "Mustang")
                     {

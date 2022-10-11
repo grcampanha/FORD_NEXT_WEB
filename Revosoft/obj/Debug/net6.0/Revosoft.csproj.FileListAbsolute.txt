@@ -2266,3 +2266,4 @@ C:\Users\guilh\OneDrive\Documents\Revosoft\WEB\FORD_NEXT_FIAP\Revosoft\obj\Debug
 C:\Users\guilh\OneDrive\Documents\Revosoft\WEB\FORD_NEXT_FIAP\Revosoft\obj\Debug\net6.0\Revosoft.pdb
 C:\Users\guilh\OneDrive\Documents\Revosoft\WEB\FORD_NEXT_FIAP\Revosoft\obj\Debug\net6.0\Revosoft.genruntimeconfig.cache
 C:\Users\guilh\OneDrive\Documents\Revosoft\WEB\FORD_NEXT_FIAP\Revosoft\obj\Debug\net6.0\ref\Revosoft.dll
+C:\Users\guilh\OneDrive\Documents\Revosoft\WEB\FORD_NEXT_FIAP\Revosoft\obj\Debug\net6.0\scopedcss\Areas\Admin\Views\Shared\_Layout.cshtml.rz.scp.css

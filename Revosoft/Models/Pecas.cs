@@ -20,9 +20,14 @@ namespace Revosoft.Models
         public decimal CambioScore { get; set; }
 
         [MaxLength(3)]
-        [Display(Name = "Score do Pneu")]
+        [Display(Name = "Score do Conjunto De Tração")]
         [Column(TypeName = "decimal(10,2)")]
         public decimal PneuScore { get; set; }
+
+        [MaxLength(3)]
+        [Display(Name = "Score da Bateria")]
+        [Column(TypeName = "decimal(10,2)")]
+        public decimal BateriaScore { get; set; }
 
 
         [Display(Name = "Veículos")]

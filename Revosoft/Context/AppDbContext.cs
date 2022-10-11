@@ -15,5 +15,11 @@ namespace Revosoft.Context
         public DbSet<Veiculos> Veiculos { get; set; }
         public DbSet<Enderecos> Enderecos { get; set; }
         public DbSet<Pecas> Pecas { get; set; }
+
+        // Tabelas referente a loja
+        public DbSet<Store> Store { get; set; }
+        public DbSet<CarrinhoCompraItem> CarrinhoCompraItens { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<PedidoDetalhe> PedidoDetalhes { get; set; }
     }
 }

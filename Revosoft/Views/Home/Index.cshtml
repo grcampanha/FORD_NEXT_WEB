@@ -4,6 +4,7 @@
 <body id="body">
     <section>
         <h2 class="hub_title">HOME</h2>
+        <div asp-validation-summary="All" class="text-danger" style="text-align: center; list-style: none !important"></div>
         <p class="user_hello">Hello, <span>@User.Identity.Name</span> ! How can I help you today?</p>
         <a asp-controller="Home" asp-action="Cars">
             <div class="vehicles">
@@ -13,7 +14,7 @@
                 <p>here you can add and remove all your cars in a simple and fast way</p>
             </div>
         </a>
-        <a asp-controller="Home" asp-action="Skills" asp-route-id="1">
+        <a asp-controller="Home" asp-action="Skills" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier).Value">
             <div class="skills">
                 <img src="~/img/icons/scores.png" alt="" srcset="" />
                 <h2>skills</h2>

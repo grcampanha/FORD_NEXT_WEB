@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "AbC8U7kHKaJ4yqFDEv5MHG2VWG/WzaNbsZFhAWdi7Ys=",
+  "Hash": "bSJqoVLYHTsZhnzEFAYmcop4PokpiL9k+UBNPcph5t0=",
   "Source": "Revosoft",
   "BasePath": "_content/Revosoft",
   "Mode": "Default",
@@ -610,6 +610,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\icons\\skills.png"
+    },
+    {
+      "Identity": "C:\\Users\\guilh\\OneDrive\\Documents\\Revosoft\\WEB\\FORD_NEXT_FIAP\\Revosoft\\wwwroot\\img\\icons\\store.ico",
+      "SourceId": "Revosoft",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\guilh\\OneDrive\\Documents\\Revosoft\\WEB\\FORD_NEXT_FIAP\\Revosoft\\wwwroot\\",
+      "BasePath": "_content/Revosoft",
+      "RelativePath": "img/icons/store.ico",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\icons\\store.ico"
     },
     {
       "Identity": "C:\\Users\\guilh\\OneDrive\\Documents\\Revosoft\\WEB\\FORD_NEXT_FIAP\\Revosoft\\wwwroot\\img\\icons\\store.png",

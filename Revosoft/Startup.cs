@@ -10,6 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Revosoft.Repositories;
+using Revosoft.Repositories.Interfaces;
+using Revosoft.Models;
+using ReflectionIT.Mvc.Paging;
 
 namespace WebApplication1
 {
@@ -26,9 +30,21 @@ namespace WebApplication1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
- options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddTransient<IStoreRepository, StoreRepository>();
+            services.AddTransient<IPedidoRepository, PedidoRepository>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 
             services.AddControllersWithViews();
+
+            services.AddPaging(options =>
+            {
+                options.ViewName = "Bootstrap4";
+                options.PageParameterName = "pageindex";
+            });
 
             services.AddAuthentication("Identity.Login")
                 .AddCookie("Identity.Login", config =>
@@ -39,6 +55,17 @@ namespace WebApplication1
                     config.ExpireTimeSpan = TimeSpan.FromHours(1);
                 });
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin",
+                    politica =>
+                    {
+                        politica.RequireRole("Admin");
+                    });
+            });
+
+            services.AddMemoryCache();
+            services.AddSession();
             services.AddRazorPages();
         }
 
@@ -60,14 +87,21 @@ namespace WebApplication1
 
             app.UseRouting();
 
+            app.UseSession();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Login}/{id?}");
+
                 endpoints.MapRazorPages();
             });
         }

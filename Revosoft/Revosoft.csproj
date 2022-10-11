@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Servicos\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

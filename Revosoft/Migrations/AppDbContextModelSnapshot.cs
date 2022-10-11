@@ -220,6 +220,32 @@ namespace Revosoft.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Revosoft.Models.CarrinhoCompraItem", b =>
+                {
+                    b.Property<int>("CarrinhoCompraItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarrinhoCompraItemId"), 1L, 1);
+
+                    b.Property<string>("CarrinhoCompraId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CarrinhoCompraItemId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("CarrinhoCompraItens");
+                });
+
             modelBuilder.Entity("Revosoft.Models.Enderecos", b =>
                 {
                     b.Property<int>("EnderecosId")
@@ -281,6 +307,10 @@ namespace Revosoft.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PecasId"), 1L, 1);
 
+                    b.Property<decimal>("BateriaScore")
+                        .HasMaxLength(3)
+                        .HasColumnType("decimal(10,2)");
+
                     b.Property<decimal>("CambioScore")
                         .HasMaxLength(3)
                         .HasColumnType("decimal(10,2)");
@@ -301,6 +331,131 @@ namespace Revosoft.Migrations
                     b.HasIndex("VeiculosId");
 
                     b.ToTable("Pecas");
+                });
+
+            modelBuilder.Entity("Revosoft.Models.Pedido", b =>
+                {
+                    b.Property<int>("PedidoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PedidoId"), 1L, 1);
+
+                    b.Property<string>("Cep")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Endereco1")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Endereco2")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("PedidoEntregueEm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PedidoEnviado")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("PedidoTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Sobrenome")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<int>("TotalItensPedido")
+                        .HasColumnType("int");
+
+                    b.HasKey("PedidoId");
+
+                    b.ToTable("Pedidos");
+                });
+
+            modelBuilder.Entity("Revosoft.Models.PedidoDetalhe", b =>
+                {
+                    b.Property<int>("PedidoDetalheId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PedidoDetalheId"), 1L, 1);
+
+                    b.Property<int>("PedidoId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Preco")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PedidoDetalheId");
+
+                    b.HasIndex("PedidoId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("PedidoDetalhes");
+                });
+
+            modelBuilder.Entity("Revosoft.Models.Store", b =>
+                {
+                    b.Property<int>("StoreId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StoreId"), 1L, 1);
+
+                    b.Property<string>("Categoria")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("Preco")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("Produto")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.HasKey("StoreId");
+
+                    b.ToTable("Store");
                 });
 
             modelBuilder.Entity("Revosoft.Models.Usuarios", b =>
@@ -425,6 +580,17 @@ namespace Revosoft.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Revosoft.Models.CarrinhoCompraItem", b =>
+                {
+                    b.HasOne("Revosoft.Models.Store", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Store");
+                });
+
             modelBuilder.Entity("Revosoft.Models.Enderecos", b =>
                 {
                     b.HasOne("Revosoft.Models.Usuarios", "Usuarios")
@@ -447,6 +613,25 @@ namespace Revosoft.Migrations
                     b.Navigation("Veiculos");
                 });
 
+            modelBuilder.Entity("Revosoft.Models.PedidoDetalhe", b =>
+                {
+                    b.HasOne("Revosoft.Models.Pedido", "Pedido")
+                        .WithMany("PedidoItens")
+                        .HasForeignKey("PedidoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Revosoft.Models.Store", "store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pedido");
+
+                    b.Navigation("store");
+                });
+
             modelBuilder.Entity("Revosoft.Models.Veiculos", b =>
                 {
                     b.HasOne("Revosoft.Models.Usuarios", "Usuarios")
@@ -456,6 +641,11 @@ namespace Revosoft.Migrations
                         .IsRequired();
 
                     b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("Revosoft.Models.Pedido", b =>
+                {
+                    b.Navigation("PedidoItens");
                 });
 
             modelBuilder.Entity("Revosoft.Models.Usuarios", b =>
